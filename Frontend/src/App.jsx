@@ -7,6 +7,7 @@ import About from './pages/About'
 import Dashboard from './pages/Dashboard'
 import SignupForm from './pages/SignUp'
 import Login from './pages/Login'
+import DoctorProfile from './pages/DoctorProfile'
 const App = () => {
   return (
     <div>
@@ -19,6 +20,7 @@ const App = () => {
       <Route path='/aboutus' element ={<About/>}/>
       <Route path='/signup' element ={<SignupForm/>}/>
       <Route path='/dashboard' element ={<Dashboard/>}/>
+      <Route path="/doctor/:doctorId" element={<DoctorProfile />} />
 
     </Routes>
     </div>
