@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { GoArrowUpRight } from "react-icons/go";
 import { IoIosMenu } from "react-icons/io";
 import { NavLink } from 'react-router-dom';
+import LoginDropdown from './LoginDropdown';
 const Header = () => {
     const[nav,setNav]=useState(false);
   return (
@@ -20,7 +21,7 @@ const Header = () => {
         <a href="#">Blog</a>
         <NavLink to='/aboutus'> <li >About Us</li></NavLink>
      </nav>
-     <a href="#" className='flex md:flex  items-center border border-blue-900 px-2 py-2  rounded-lg hover:bg-blue-900 hover:text-white transition'>Appointement <span><GoArrowUpRight/></span> </a>
+   <LoginDropdown/>
     
      </div>
     </header>
