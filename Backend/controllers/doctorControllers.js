@@ -73,5 +73,41 @@ const getDoctors = async (req, res) => {
           });
     }
  }
+ const appplyDoctor=async(req,res)=>{
+    try{
+     const existDoctor=await Doctor.findOne({user:req.user._id})
+      if(existDoctor){
+          return res.status(400).json({
+              success: false,
+              message: 'You are already a doctor'
+            });
+      }
+      const { specialization, experience, fee, availability, bio, education } = req.body;
+    
+      const doctor = await Doctor.create({
+        user: req.user._id,
+        specialization,
+        experience,
+        fee,
+        availability,
+        bio,
+        education
+      });
+  
+      res.status(201).json({
+        success: true,
+        data: doctor,
+        message: 'Doctor profile created and pending admin approval'
+      });
+
+    }catch(error){
+     
+        res.status(500).json({
+            success: false,
+            message: 'Server Error',
+            error: error.message
+          });
+    }
+ }
  
- export {getDoctors,getDoctor}
+ export {getDoctors,getDoctor,appplyDoctor}
