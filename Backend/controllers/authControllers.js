@@ -2,7 +2,8 @@ import 'dotenv/config';
 
 import User from "../models/User.js";
 import generateToken from '../utils/token.js';
-export const register = async (req, res) => { 
+
+const register = async (req, res) => { 
     try {
         const {name, email, password, role, phone, address,adminCode} = req.body;
 
@@ -68,5 +69,58 @@ export const register = async (req, res) => {
     
 }
 
+const login = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid credentials'
+        });
+      }
+  
+     
+      const isMatch = await user.matchPassword(password);
+      if (!isMatch) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid credentials'
+        });
+      }
+  
+      // Check if doctor is approved
+      if (user.role === 'doctor' && !user.isApproved) {
+        return res.status(401).json({
+          success: false,
+          message: 'Your account is pending approval'
+        });
+      }
+      
+  
+      const token = generateToken(user._id);
+  
+      res.status(200).json({
+        success: true,
+        data: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          isApproved: user.isApproved,
+          token
+        }
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Server Error',
+        error: error.message
+      });
+    }
+  };
 
-export default register;
+export { register, login }
+
+
