@@ -13,8 +13,11 @@ app.use(cors())
 
 
 //user routes
+// - `POST /api/auth/register` - Register a new user (patient/doctor)
+// - `POST /api/auth/login` - Login and get token
+// - `GET /api/auth/profile` - Get current user's profile
+// - `PUT /api/auth/profile` - Update user profile
 app.use('/api/auth', authRoutes)
-
 connectDB()
 app.listen(Port, () => {    
     console.log(`Server is running on port ${Port}`)
