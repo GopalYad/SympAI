@@ -121,6 +121,22 @@ const login = async (req, res) => {
     }
   };
 
-export { register, login }
+const getProfile=async(req,res)=>{
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    
+    res.status(200).json({
+      success: true,
+      data: user
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+      error: error.message
+    });
+  }
+}
+export { register, login,getProfile };
 
 
