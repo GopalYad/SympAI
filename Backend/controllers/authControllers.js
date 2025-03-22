@@ -137,6 +137,33 @@ const getProfile=async(req,res)=>{
     });
   }
 }
-export { register, login,getProfile };
+
+const updateProfile=async(req,res)=>{
+  try {
+    const { name, phone, address } = req.body;
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { 
+        name: name || req.user.name,
+        phone: phone || req.user.phone,
+        address: address || req.user.address
+      },
+      { new: true }
+    ).select('-password');
+    
+    res.status(200).json({
+      success: true,
+      data: updatedUser
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+      error: error.message
+    });
+  }
+}
+export { register, login,getProfile ,updateProfile};
 
 
