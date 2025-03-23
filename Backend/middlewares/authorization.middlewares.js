@@ -20,5 +20,27 @@ const protect =async (req,res,next)=>{
         throw new Error('Not authorized, no token')
     }
 }
+//check authorize role
+const authorize = (...roles) => {
+    return (req, res, next) => {
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({
+          success: false,
+          message: `User role '${req.user.role}' is not authorized to access this route`
+        });
+      }
+      next();
+    };
+  };
+//check doctor approval status
+const checkDoctorApproval = async (req, res, next) => {
+    if (req.user.role === 'doctor' && !req.user.isApproved) {
+      return res.status(403).json({
+        success: false,
+        message: 'Your account is pending approval by admin'
+      });
+    }
+    next();
+  };   
 
-export default protect
+export {protect,authorize,checkDoctorApproval}
