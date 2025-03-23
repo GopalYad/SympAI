@@ -5,6 +5,7 @@ import cors from 'cors'
 import connectDB from './config/db.js'
 import authRoutes from './routes/auth.js'
 import doctorRoutes from './routes/doctor.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 const Port=process.env.PORT || 5000
 const app = express()
 
@@ -27,6 +28,14 @@ app.use('/api/auth', authRoutes)
 // - `PUT /api/doctors/profile` - Update doctor profile (for doctor users)
 // - `POST /api/doctors/:id/reviews` - Add a review for a doctor (for patients)
 app.use('/api/doctors', doctorRoutes);
+
+// //
+// - `GET /api/admin/users` - Get all users
+// - `GET /api/admin/users/:id` - Get user by ID
+// - `DELETE /api/admin/users/:id` - Delete user
+// - `GET /api/admin/doctors` - Get all doctors including unapproved
+// - `PUT /api/admin/doctors/:id/approve` - Approve doctor
+app.use('/api/admin', adminRoutes);
 
 connectDB()
 app.listen(Port, () => {    
