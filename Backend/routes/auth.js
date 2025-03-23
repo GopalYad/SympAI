@@ -3,7 +3,7 @@ import express from 'express';
 
 import { register,login,getProfile,updateProfile}  from '../controllers/authControllers.js';
 import { validatorRegister, validateLogin } from '../middlewares/validators.middlewares.js';
-import  protect  from '../middlewares/authorization.middlewares.js';
+import  {protect}  from '../middlewares/authorization.middlewares.js';
 const router = express.Router();
 
 

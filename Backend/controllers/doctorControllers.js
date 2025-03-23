@@ -73,7 +73,7 @@ const getDoctors = async (req, res) => {
           });
     }
  }
- const appplyDoctor=async(req,res)=>{
+ const applyDoctor=async(req,res)=>{
     try{
      const existDoctor=await Doctor.findOne({user:req.user._id})
       if(existDoctor){
@@ -109,5 +109,45 @@ const getDoctors = async (req, res) => {
           });
     }
  }
+
+ const updateDoctorProfile=async(req,res)=>{
+  try {
+    const { specialization, experience, fee, availability, bio, education } = req.body;
+    
+    let doctor = await Doctor.findOne({ user: req.user._id });
+    
+    if (!doctor) {
+      return res.status(404).json({
+        success: false,
+        message: 'Doctor profile not found'
+      });
+    }
+    
+    // Update fields
+    doctor = await Doctor.findByIdAndUpdate(
+      doctor._id,
+      {
+        specialization: specialization || doctor.specialization,
+        experience: experience || doctor.experience,
+        fee: fee || doctor.fee,
+        availability: availability || doctor.availability,
+        bio: bio || doctor.bio,
+        education: education || doctor.education
+      },
+      { new: true }
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: doctor
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+      error: error.message
+    });
+  }
+ }
  
- export {getDoctors,getDoctor,appplyDoctor}
+ export {getDoctors,getDoctor,applyDoctor,updateDoctorProfile}
