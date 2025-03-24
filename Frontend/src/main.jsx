@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <App />
+    <App  className="min-h-screen bg-gradient-to-br from-cyan-100 via-blue-50 to-blue-200" />
+    
   </BrowserRouter>,
 )
