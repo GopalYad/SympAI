@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard'
 import SignupForm from './pages/SignUp'
 import Login from './pages/Login'
 import DoctorProfile from './pages/DoctorProfile'
+import PatientDashboard from './pages/PatientDashboared'
+import AppointmentForm from './components/AppointmentForm'  
 const App = () => {
   return (
     <div>
@@ -21,6 +23,9 @@ const App = () => {
       <Route path='/signup' element ={<SignupForm/>}/>
       <Route path='/dashboard' element ={<Dashboard/>}/>
       <Route path="/doctor/:doctorId" element={<DoctorProfile />} />
+      <Route path='/patient' element ={<PatientDashboard/>}/>
+      <Route path='/appointment' element ={<AppointmentForm/>}/>
+      
 
     </Routes>
     </div>

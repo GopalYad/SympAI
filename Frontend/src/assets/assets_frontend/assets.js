@@ -37,6 +37,7 @@ import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
 import banner from '../assets_frontend/banner-doctor.png'
+import banner1 from '../assets_frontend/banner1.webp'
 import serviceImg1 from '../assets_frontend/service-img-one.png'
 import serviceImg2 from '../assets_frontend/service-img-two.jpg'
 import serviceImg3 from '../assets_frontend/service-img-three.jpg'
@@ -44,6 +45,7 @@ import feedbackImg1 from '../assets_frontend/client.png'
 export const assets = {
     appointment_img,
     banner,
+    banner1,
     feedbackImg1,
     serviceImg1,
     serviceImg2,
