@@ -6,6 +6,7 @@ import connectDB from './config/db.js'
 import authRoutes from './routes/auth.js'
 import doctorRoutes from './routes/doctor.routes.js'
 import adminRoutes from './routes/admin.routes.js'
+import appointmentRoutes from './routes/appointment.js'
 const Port=process.env.PORT || 5000
 const app = express()
 
@@ -36,6 +37,13 @@ app.use('/api/doctors', doctorRoutes);
 // - `GET /api/admin/doctors` - Get all doctors including unapproved
 // - `PUT /api/admin/doctors/:id/approve` - Approve doctor
 app.use('/api/admin', adminRoutes);
+
+// `POST /api/appointments` - Book a new appointment (for patients)
+// - `GET /api/appointments` - Get user's appointments
+// - `GET /api/appointments/:id` - Get appointment details
+// - `PUT /api/appointments/:id` - Update appointment status (for doctors/admin)
+// - `PUT /api/appointments/:id/prescription` - Add prescription (for doctors)
+app.use('/api/appointments',appointmentRoutes)
 
 connectDB()
 app.listen(Port, () => {    

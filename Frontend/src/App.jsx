@@ -10,11 +10,12 @@ import Login from './pages/Login'
 import DoctorProfile from './pages/DoctorProfile'
 import PatientDashboard from './pages/PatientDashboared'
 import AppointmentForm from './components/AppointmentForm'  
+import UserProfile from './pages/UserProfile'
 const App = () => {
   return (
     <div>
     {/* <Home/> */}
-    <Header />
+    {/* <Header /> */}
     <Routes>
       <Route path='/' element ={<Home/>}/>
       <Route path='/Login' element ={<Login/>}/>
@@ -25,7 +26,7 @@ const App = () => {
       <Route path="/doctor/:doctorId" element={<DoctorProfile />} />
       <Route path='/patient' element ={<PatientDashboard/>}/>
       <Route path='/appointment' element ={<AppointmentForm/>}/>
-      
+      <Route path='profile' element={<UserProfile/>}/>
 
     </Routes>
     </div>
