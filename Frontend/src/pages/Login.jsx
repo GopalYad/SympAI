@@ -15,12 +15,12 @@ export default function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
-
+  
     if (!email || !password) {
       console.log("Email and password are required");
       return;
     }
-
+  
     try {
       const url = "http://localhost:5000/api/auth/login";
       const response = await fetch(url, {
@@ -30,23 +30,27 @@ export default function SignupForm() {
         },
         body: JSON.stringify(formData),
       });
-
-      // Detect response type
-      const contentType = response.headers.get("content-type");
-      let result;
-
-      if (contentType && contentType.includes("application/json")) {
-        result = await response.json();
-        window.location.href = "/patient";
+  
+      const result = await response.json();
+  
+      if (result.success) {
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("role", result.data.role); 
+        
+     
+        if (result.data.role === "doctor" || result.data.role==="admin") {
+          window.location.href = "/dashboard"; 
+        } else {
+          window.location.href = "/patient"; 
+        }
       } else {
-        result = await response.text(); 
+        console.log("Login failed:", result.message);
       }
-
-      console.log(result);
     } catch (error) {
       console.log("Login error:", error);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500">
