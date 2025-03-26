@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { GoArrowUpRight } from "react-icons/go";
 import { IoIosMenu } from "react-icons/io";
-import { NavLink } from 'react-router-dom';
+import { IoCameraOutline } from "react-icons/io5";
+import { NavLink, useNavigate } from 'react-router-dom';
 import LoginDropdown from './LoginDropdown';
-import Signup from '../pages/SignUp';
 
 const Header = () => {
   const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCameraClick = () => {
+    navigate('/qr-scanner');
+  };
 
   return (
     <header className="bg-gradient-to-r from-cyan-400 via-sky-600 to-blue-500 text-white px-4 md:px-20 py-3 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
@@ -20,9 +25,9 @@ const Header = () => {
 
           {/* Logo */}
           <NavLink to="/" className="text-3xl font-extrabold text-white drop-shadow-lg">
-  <span className="bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">DOC</span><span className="text-yellow-300">+</span>
-</NavLink>
-
+            <span className="bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">DOC</span>
+            <span className="text-yellow-300">+</span>
+          </NavLink>
         </div>
 
         {/* Navigation Links */}
@@ -36,6 +41,15 @@ const Header = () => {
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
+          {/* QR Camera Icon */}
+          <button
+            onClick={handleCameraClick}
+            className="text-white text-xl hover:text-yellow-300 transition-transform hover:scale-110"
+            title="Scan QR"
+          >
+            <IoCameraOutline />
+          </button>
+
           <LoginDropdown />
           <NavLink to="/signup">
             <button className="bg-white text-blue-600 font-bold px-4 py-2 rounded-full hover:bg-blue-100 transition-all flex items-center gap-1 shadow-sm">
@@ -53,6 +67,12 @@ const Header = () => {
           <a href="#" className="hover:text-sky-600 transition-all">Service</a>
           <a href="#" className="hover:text-sky-600 transition-all">Blog</a>
           <NavLink to="/aboutus" className="hover:text-sky-600 transition-all">About Us</NavLink>
+          <button
+            onClick={handleCameraClick}
+            className="flex items-center gap-2 text-blue-600 hover:text-sky-600"
+          >
+            <IoCameraOutline /> Scan QR
+          </button>
         </div>
       )}
     </header>

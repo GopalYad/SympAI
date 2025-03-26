@@ -71,34 +71,41 @@ export const assets = {
 export const specialityData = [
     {
         speciality: 'General physician',
-        image: General_physician
-    },
-    {
+        image: General_physician,
+        diseases: ['Fever', 'Cold & Cough', 'Body Pain', 'Allergy', 'Fatigue', 'Viral Infection']
+      },
+      {
         speciality: 'Gynecologist',
-        image: Gynecologist
-    },
-    {
+        image: Gynecologist,
+        diseases: ['PCOS', 'Pregnancy', 'Menstrual Disorders', 'Infertility', 'Vaginal Infections']
+      },
+      {
         speciality: 'Dermatologist',
-        image: Dermatologist
-    },
-    {
+        image: Dermatologist,
+        diseases: ['Acne', 'Eczema', 'Psoriasis', 'Fungal Infections', 'Hair Loss', 'Skin Rashes']
+      },
+      {
         speciality: 'Pediatricians',
-        image: Pediatricians
-    },
-    {
+        image: Pediatricians,
+        diseases: ['Vaccinations', 'Childhood Infections', 'Growth Issues', 'Cough', 'Cold', 'Nutritional Deficiencies']
+      },
+      {
         speciality: 'Neurologist',
-        image: Neurologist
-    },
-    {
+        image: Neurologist,
+        diseases: ['Migraine', 'Epilepsy', 'Stroke', 'Parkinson\'s', 'Multiple Sclerosis', 'Nerve Pain']
+      },
+      {
         speciality: 'Gastroenterologist',
-        image: Gastroenterologist
-    },
+        image: Gastroenterologist,
+        diseases: ['Acidity', 'Ulcers', 'Liver Disease', 'Irritable Bowel Syndrome (IBS)', 'Constipation', 'Hepatitis']
+      },
 ]
 
 export const doctors = [
     {
         _id: 'doc1',
         name: 'Dr. Richard James',
+        isAvailable: Math.random() > 0.5,
         image: doc1,
         speciality: 'General physician',
         degree: 'MBBS',
@@ -115,6 +122,7 @@ export const doctors = [
         name: 'Dr. Emily Larson',
         image: doc2,
         speciality: 'Gynecologist',
+        isAvailable: Math.random() > 0.5,
         degree: 'MBBS',
         experience: '3 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
@@ -127,6 +135,7 @@ export const doctors = [
     {
         _id: 'doc3',
         name: 'Dr. Sarah Patel',
+        isAvailable: Math.random() > 0.5,
         image: doc3,
         speciality: 'Dermatologist',
         degree: 'MBBS',
@@ -141,6 +150,7 @@ export const doctors = [
     {
         _id: 'doc4',
         name: 'Dr. Christopher Lee',
+        isAvailable: Math.random() > 0.5,
         image: doc4,
         speciality: 'Pediatricians',
         degree: 'MBBS',
@@ -155,6 +165,7 @@ export const doctors = [
     {
         _id: 'doc5',
         name: 'Dr. Jennifer Garcia',
+        isAvailable: Math.random() > 0.5,
         image: doc5,
         speciality: 'Neurologist',
         degree: 'MBBS',
@@ -169,6 +180,7 @@ export const doctors = [
     {
         _id: 'doc6',
         name: 'Dr. Andrew Williams',
+        isAvailable: Math.random() > 0.5,
         image: doc6,
         speciality: 'Neurologist',
         degree: 'MBBS',
@@ -183,6 +195,7 @@ export const doctors = [
     {
         _id: 'doc7',
         name: 'Dr. Christopher Davis',
+        isAvailable: Math.random() > 0.5,
         image: doc7,
         speciality: 'General physician',
         degree: 'MBBS',
@@ -197,6 +210,7 @@ export const doctors = [
     {
         _id: 'doc8',
         name: 'Dr. Timothy White',
+        isAvailable: Math.random() > 0.5,
         image: doc8,
         speciality: 'Gynecologist',
         degree: 'MBBS',
@@ -211,6 +225,7 @@ export const doctors = [
     {
         _id: 'doc9',
         name: 'Dr. Ava Mitchell',
+        isAvailable: Math.random() > 0.5,
         image: doc9,
         speciality: 'Dermatologist',
         degree: 'MBBS',
@@ -225,6 +240,7 @@ export const doctors = [
     {
         _id: 'doc10',
         name: 'Dr. Jeffrey King',
+        isAvailable: Math.random() > 0.5,
         image: doc10,
         speciality: 'Pediatricians',
         degree: 'MBBS',
@@ -239,6 +255,7 @@ export const doctors = [
     {
         _id: 'doc11',
         name: 'Dr. Zoe Kelly',
+        isAvailable: Math.random() > 0.5,
         image: doc11,
         speciality: 'Neurologist',
         degree: 'MBBS',
@@ -253,6 +270,7 @@ export const doctors = [
     {
         _id: 'doc12',
         name: 'Dr. Patrick Harris',
+        isAvailable: Math.random() > 0.5,
         image: doc12,
         speciality: 'Neurologist',
         degree: 'MBBS',
@@ -267,6 +285,7 @@ export const doctors = [
     {
         _id: 'doc13',
         name: 'Dr. Chloe Evans',
+        isAvailable: Math.random() > 0.5,
         image: doc13,
         speciality: 'General physician',
         degree: 'MBBS',
@@ -281,6 +300,7 @@ export const doctors = [
     {
         _id: 'doc14',
         name: 'Dr. Ryan Martinez',
+        isAvailable: Math.random() > 0.5,
         image: doc14,
         speciality: 'Gynecologist',
         degree: 'MBBS',
@@ -295,6 +315,7 @@ export const doctors = [
     {
         _id: 'doc15',
         name: 'Dr. Amelia Hill',
+        isAvailable: Math.random() >0.5,
         image: doc15,
         speciality: 'Dermatologist',
         degree: 'MBBS',

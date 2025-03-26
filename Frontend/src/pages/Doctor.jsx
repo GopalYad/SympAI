@@ -1,29 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { doctors } from '../assets/assets_frontend/assets';
+import { doctors as initialDoctors } from '../assets/assets_frontend/assets';
 import { useNavigate } from 'react-router-dom';
 
 const Doctor = () => {
   const [selectedSpecialization, setSelectedSpecialization] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredDoctors, setFilteredDoctors] = useState(doctors);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [doctorsWithAvailability, setDoctorsWithAvailability] = useState([]);
   const navigate = useNavigate();
 
+  // Function to randomly update availability
+  const updateAvailability = () => {
+    const updatedDoctors = initialDoctors.map(doc => ({
+      ...doc,
+      available: Math.random() > 0.5
+    }));
+    setDoctorsWithAvailability(updatedDoctors);
+  };
+
+  // Set availability and update it every 15 mins
   useEffect(() => {
-    const filtered = doctors.filter((doc) => {
+    updateAvailability(); // Initial call
+    const interval = setInterval(updateAvailability, 15 * 60 * 1000); // 15 mins
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Filter logic based on specialization and search
+  useEffect(() => {
+    const filtered = doctorsWithAvailability.filter((doc) => {
       const docSpecialization = (doc.speciality || '').toString().toLowerCase().trim();
       const matchesSpecialization = selectedSpecialization
         ? docSpecialization === selectedSpecialization.toLowerCase().trim()
         : true;
       
       const docName = (doc.name || '').toString().toLowerCase();
-      
       const matchesSearch = docName.includes(searchTerm.toLowerCase()) || 
                             docSpecialization.includes(searchTerm.toLowerCase());
-      
+
       return matchesSpecialization && matchesSearch;
     });
     setFilteredDoctors(filtered);
-  }, [selectedSpecialization, searchTerm]);
+  }, [selectedSpecialization, searchTerm, doctorsWithAvailability]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -43,9 +61,8 @@ const Doctor = () => {
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-extrabold text-blue-900 text-center mb-8">Find Your Best Doctor</h1>
 
-        {/* Search Bar */}
         <form onSubmit={handleSearch} className="flex w-full max-w-xl mx-auto items-center bg-white border border-blue-300 shadow-lg rounded-full px-4 py-2 mb-8">
-          <svg className="text-blue-500 w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg className="text-blue-500 w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
           <input
@@ -60,9 +77,7 @@ const Doctor = () => {
           </button>
         </form>
 
-        {/* Responsive Layout */}
         <div className="flex flex-col lg:flex-row">
-          {/* Sidebar for Specialization Filters */}
           <div className="w-full lg:w-1/4 p-4 bg-white rounded-lg shadow-lg mb-6 lg:mb-0">
             <h2 className="text-xl font-semibold mb-4 text-blue-800">Browse by Specialization</h2>
             <ul className="space-y-2">
@@ -93,7 +108,6 @@ const Doctor = () => {
             </ul>
           </div>
 
-          {/* Doctors Grid */}
           <div className="w-full lg:w-3/4 doctors-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
             {filteredDoctors.map((doc, index) => (
               <div

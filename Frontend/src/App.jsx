@@ -10,6 +10,9 @@ import Login from './pages/Login'
 import DoctorProfile from './pages/DoctorProfile'
 import PatientDashboard from './pages/PatientDashboared'
 import AppointmentForm from './components/AppointmentForm'  
+import HospitalPage from './pages/Hospitalpage'
+import QrScanner from './components/Qrscanner'; // adjust path if needed
+
 const App = () => {
   return (
     <div>
@@ -25,6 +28,9 @@ const App = () => {
       <Route path="/doctor/:doctorId" element={<DoctorProfile />} />
       <Route path='/patient' element ={<PatientDashboard/>}/>
       <Route path='/appointment' element ={<AppointmentForm/>}/>
+      <Route path='/hospital' element ={<HospitalPage/>}/>
+      <Route path="/qr-scanner" element={<QrScanner />} />
+
       
 
     </Routes>

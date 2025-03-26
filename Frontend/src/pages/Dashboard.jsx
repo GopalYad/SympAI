@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, CardContent } from "../components/Card";
 import { Button } from "../components/Button";
 import { FaCalendarAlt, FaUserInjured, FaClinicMedical, FaVideo, FaSearch, FaBell, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -45,21 +45,20 @@ const Dashboard = () => {
     }
   ];
 
-  const appointments = [
-    { name: "Jhon Smith", time: "10:00", status: "Ongoing", type: "Video Call" },
-    { name: "Frank Murray", time: "10:25", status: "Scheduled", type: "Clinic Visit" },
-    { name: "Ella Lucia", time: "11:30", status: "Scheduled", type: "Video Call" },
-    { name: "Alyssa Dehn", time: "12:20", status: "Scheduled", type: "Clinic Visit" }
+  const appointmentRequests = [
+    { name: "Jhon Smith", disease: "Migraine", time: "10:00 AM", token: "A101" },
+    { name: "Frank Murray", disease: "Fever", time: "10:25 AM", token: "A102" },
+    { name: "Ella Lucia", disease: "Acne", time: "11:30 AM", token: "A103" },
+    { name: "Alyssa Dehn", disease: "Constipation", time: "12:20 PM", token: "A104" }
   ];
 
   const navItems = [
     "Overview", "Appointment", "My Patients", "Schedule Timings",
-    "Payments", "Message", "Blog", "Settings"
+    "Payments", "Appointment Requests", "Blog", "Settings"
   ];
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Animated Sidebar */}
       <motion.aside
         initial={{ x: -300 }}
         animate={{ x: isSidebarOpen ? 0 : -300 }}
@@ -100,9 +99,7 @@ const Dashboard = () => {
         </nav>
       </motion.aside>
 
-      {/* Main Content */}
       <div className="flex-1 ml-64">
-        {/* Animated Header */}
         <motion.header
           initial={{ y: -100 }}
           animate={{ y: 0 }}
@@ -160,9 +157,7 @@ const Dashboard = () => {
           </div>
         </motion.header>
 
-        {/* Dashboard Content */}
         <main className="p-4 md:p-8">
-          {/* Animated Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {statsCards.map((card, index) => (
               <motion.div
@@ -191,39 +186,29 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* Today's Appointments Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             className="mt-6 bg-white p-6 rounded-xl shadow-md"
           >
-            <h2 className="text-xl font-bold mb-4">Today's Appointments</h2>
+            <h2 className="text-xl font-bold mb-4">Incoming Appointment Requests</h2>
             <div className="space-y-4">
-              {appointments.map((appointment, index) => (
+              {appointmentRequests.map((req, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex justify-between items-center p-3 rounded-lg hover:bg-gray-50 transition-all"
+                  className="flex justify-between items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-2 h-2 rounded-full ${
-                      appointment.status === "Ongoing" ? "bg-green-500" : "bg-blue-500"
-                    }`} />
-                    <div>
-                      <p className="font-medium">{appointment.name}</p>
-                      <p className="text-sm text-gray-500">{appointment.type}</p>
-                    </div>
+                  <div>
+                    <p className="font-semibold text-blue-800">{req.name}</p>
+                    <p className="text-sm text-gray-600">Disease: {req.disease}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">{appointment.time}</p>
-                    <p className={`text-sm ${
-                      appointment.status === "Ongoing" ? "text-green-600" : "text-blue-600"
-                    }`}>
-                      {appointment.status}
-                    </p>
+                    <p className="font-medium">Time: {req.time}</p>
+                    <p className="text-sm text-green-600">Token: {req.token}</p>
                   </div>
                 </motion.div>
               ))}
