@@ -3,9 +3,9 @@ import { useState } from "react";
 export default function SignupForm() {
   const [formData, setFormData] = useState({
     email: "",
-    firstName: "",
-    lastName: "",
+    name: "",
     password: "",
+    role:""
   });
 
   const handleChange = (e) => {
@@ -14,12 +14,13 @@ export default function SignupForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, password } = formData;
-    if (!firstName || !lastName || !password) {
+    const { name, email, password,role } = formData;
+    if (!name || !email || !password  ||!role) {
+      console.log('all field are require')
       return;
     }
     try {
-      const url = "http://localhost:8080/auth/signup";
+      const url = "http://localhost:5000/api/auth/register";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -29,8 +30,17 @@ export default function SignupForm() {
       });
       const result = await response.json();
       console.log(result);
+
+      //json token handle
+      if (result.data && result.data.token) { 
+        localStorage.setItem("jwt", result.data.token);
+        console.log("Registration successful, Token stored:", result.data.token);
+        window.location.href = "/login"; 
+      } else {
+        console.log("Registration failed: No token received.");
+      }
     } catch (error) {
-      console.log("signup error :", error);
+      console.log("Signup error:", error.message || error);
     }
   };
 
@@ -50,25 +60,26 @@ export default function SignupForm() {
           className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4 transition duration-300"
           required
         />
+        <input
+          type="text"
+          name="role"
+          placeholder="role"
+          value={formData.role}
+          onChange={handleChange}
+          className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4 transition duration-300"
+          required
+        />
         <div className="flex space-x-4 mb-4">
           <input
             type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
+            name="name"
+            placeholder="name"
+            value={formData.name}
             onChange={handleChange}
             className="w-1/2 p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
           />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="w-1/2 p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            required
-          />
+         
         </div>
         <input
           type="password"

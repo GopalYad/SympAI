@@ -20,7 +20,7 @@ export default function SignupForm() {
     }
 
     try {
-      const url = "http://localhost:8080/auth/login";
+      const url = "http://localhost:5000/api/auth/login";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -35,8 +35,9 @@ export default function SignupForm() {
 
       if (contentType && contentType.includes("application/json")) {
         result = await response.json();
+        window.location.href = "/dashboard";
       } else {
-        result = await response.text(); // Handle plain text response
+        result = await response.text(); 
       }
 
       console.log(result);
