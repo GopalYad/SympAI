@@ -3,12 +3,12 @@ import { Card, CardContent } from "../components/Card";
 import { Button } from "../components/Button";
 import { FaCalendarAlt, FaUserInjured, FaClinicMedical, FaVideo, FaSearch, FaBell, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Overview");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const statsCards = [
     {
@@ -93,7 +93,7 @@ const Dashboard = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="w-full p-3 text-red-500 hover:bg-red-50 rounded-lg flex items-center gap-2"
-            onClick={() => navigate("/login")}
+            // onClick={() => navigate("/login")}
           >
             <FaSignOutAlt /> Logout
           </motion.button>

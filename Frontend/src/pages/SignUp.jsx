@@ -76,7 +76,7 @@ export default function SignupForm() {
             placeholder="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-1/2 p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
           />
          

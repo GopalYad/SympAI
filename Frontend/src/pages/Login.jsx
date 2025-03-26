@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
+   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,7 +37,7 @@ export default function SignupForm() {
 
       if (contentType && contentType.includes("application/json")) {
         result = await response.json();
-        window.location.href = "/dashboard";
+        window.location.href = "/patient";
       } else {
         result = await response.text(); 
       }

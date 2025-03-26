@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FaCalendarAlt, FaUserMd, FaFileMedical, FaPrescriptionBottle, FaEnvelope, FaSignOutAlt, FaSearch, FaBell, FaQuestionCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +7,55 @@ import { useNavigate } from "react-router-dom";
 const PatientDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Overview");
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      setLoading(true);
+      const token = localStorage.getItem("jwt");
+      
+      if (!token) {
+        console.log("No token found");
+        setError("No token found. Please login.");
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const response = await axios.get("http://localhost:5000/api/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("Profile response:", response.data);
+
+        if (response.data && response.data.data) {
+          setProfile(response.data.data);
+          setError(null);
+        } else {
+          console.log("Invalid response format:", response.data);
+          setError("Failed to load profile data");
+        }
+      } catch (err) {
+        console.log("Profile fetch error:", err);
+        
+        if (err.response?.status === 401) {
+          localStorage.removeItem("jwt");
+          navigate("/login");
+        } else {
+          setError(err.response?.data?.message || "Error fetching profile");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [navigate]);
 
   const navItems = [
     { label: "Overview", href: "#" },
@@ -51,6 +100,12 @@ const PatientDashboard = () => {
     { doctor: "Dr. Amy Wang", time: "5:00 PM", status: "Completed", type: "Video Call" }
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setProfile(null);
+    navigate("/login");
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       <motion.aside
@@ -84,7 +139,7 @@ const PatientDashboard = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="w-full p-3 text-red-500 hover:bg-red-50 rounded-lg flex items-center gap-2"
-            onClick={() => navigate("/login")}
+            onClick={handleLogout}
           >
             <FaSignOutAlt /> Logout
           </motion.button>
@@ -127,6 +182,15 @@ const PatientDashboard = () => {
         </motion.header>
 
         <main className="p-4 md:p-8">
+          <div className="w-full py-22 px-12 mb-6 bg-red-300 rounded-xl shadow-md transition-all duration-300">
+            {loading ? (
+              <h1 className="text-xl font-bold">Loading...</h1>
+            ) : error ? (
+              <h1 className="text-xl font-bold text-red-600">{error}</h1>
+            ) : (
+              <h1 className="text-xl font-bold">Welcome, {profile?.name || "User"}</h1>
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {overviewCards.map((card, index) => (
               <motion.div
