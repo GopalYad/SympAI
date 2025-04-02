@@ -15,7 +15,7 @@ const App = () => {
   return (
     <div>
     {/* <Home/> */}
-    {/* <Header /> */}
+    <Header />
     <Routes>
       <Route path='/' element ={<Home/>}/>
       <Route path='/Login' element ={<Login/>}/>

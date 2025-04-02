@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { doctors } from '../assets/assets_frontend/assets';
 
 const DoctorProfile = () => {
   const { doctorId } = useParams();
@@ -11,13 +10,17 @@ const DoctorProfile = () => {
   const [availableTimes, setAvailableTimes] = useState([]);
 
   useEffect(() => {
-    const foundDoctor = doctors.find(doc => doc._id === doctorId);
-    if (foundDoctor) {
-      setDoctor(foundDoctor);
-      generateAvailableSlots();
-    } else {
-      console.error('Doctor not found');
-    }
+    fetch(`http://localhost:5000/api/doctors/${doctorId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.data) {
+          setDoctor(data.data);
+          generateAvailableSlots();
+        } else {
+          console.error('Doctor not found:', data);
+        }
+      })
+      .catch(error => console.error('Error fetching doctor:', error));
   }, [doctorId]);
 
   const generateAvailableSlots = () => {
@@ -25,14 +28,12 @@ const DoctorProfile = () => {
     const dates = [];
     const times = [];
 
-    // Generate next 7 days
     for (let i = 0; i < 7; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       dates.push(date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' }));
     }
 
-    // Generate time slots from 9 AM to 5 PM
     for (let hour = 9; hour <= 17; hour++) {
       for (let minute of [0, 30]) {
         const time = new Date();
@@ -43,14 +44,12 @@ const DoctorProfile = () => {
 
     setAvailableDates(dates);
     setAvailableTimes(times);
-
-    // Set default selected date to today
     setSelectedDate(dates[0]);
   };
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    setSelectedTime(''); // Reset time when a new date is selected
+    setSelectedTime('');
   };
 
   const handleTimeClick = (time) => {
@@ -81,7 +80,6 @@ const DoctorProfile = () => {
       <div className="container mx-auto px-4">
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 lg:p-10">
           <div className="flex flex-col md:flex-row">
-            {/* Doctor Image */}
             <div className="flex-shrink-0 md:w-1/3 mb-6 md:mb-0">
               <img
                 src={doctor.image}
@@ -90,24 +88,22 @@ const DoctorProfile = () => {
               />
             </div>
 
-            {/* Doctor Details */}
             <div className="flex-grow md:ml-6">
               <h1 className="text-3xl font-extrabold text-blue-900 flex items-center">
                 {doctor.name}
                 <span className="ml-2 text-green-500 text-lg font-bold">✔</span>
               </h1>
               <p className="text-blue-600 text-lg mt-2">
-                {doctor.degree} - {doctor.speciality} <span className="text-gray-500">({doctor.experience})</span>
+                {doctor.degree} - {doctor.specialization} <span className="text-gray-500">({doctor.experience} years)</span>
               </p>
               <h2 className="text-blue-800 font-bold text-xl mt-4">About</h2>
-              <p className="text-gray-700 text-base mt-2">{doctor.about}</p>
+              <p className="text-gray-700 text-base mt-2">{doctor.bio}</p>
               <p className="text-blue-800 font-bold text-xl mt-4">
-                Appointment fee: <span className="text-blue-500">${doctor.fees}</span>
+                Appointment fee: <span className="text-blue-500">${doctor.fee}</span>
               </p>
             </div>
           </div>
 
-          {/* Booking Slots */}
           <div className="mt-6">
             <h2 className="text-2xl font-bold text-blue-800 mb-4">Booking slots</h2>
             <div className="flex flex-wrap gap-2 mb-4">
@@ -143,7 +139,6 @@ const DoctorProfile = () => {
             </div>
           </div>
 
-          {/* Book Appointment Button */}
           <div className="mt-6 text-center">
             <button
               onClick={handleAppointmentBooking}
