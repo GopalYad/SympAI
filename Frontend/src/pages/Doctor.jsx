@@ -57,7 +57,7 @@ const Doctor = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex flex-col items-center justify-start py-12">
+    <section className="bg-gradient-to-br from-blue-60 to-blue-100 min-h-screen flex flex-col items-center justify-start py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-extrabold text-blue-900 text-center mb-8">Find Your Best Doctor</h1>
 
